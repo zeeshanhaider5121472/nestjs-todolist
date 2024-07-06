@@ -21,7 +21,6 @@ const Modaledit: React.FC<TaskProps> = ({
             ✕
           </button>
         </form>
-        <h3 className="font-bold text-lg">Edit Task</h3>
         {children}
         {/* <p className="py-4">{task.Description}</p> */}
       </div>

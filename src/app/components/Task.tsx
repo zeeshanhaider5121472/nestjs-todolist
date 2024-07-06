@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";
 import { FiEdit, FiTrash } from "react-icons/fi";
-import { patchtabledata } from "../../../api";
+import { deletetabledata, patchtabledata } from "../../../api";
 import { TableTasks } from "../../../types/tabledata";
 import Modaledit from "./Modaledit";
 
@@ -40,7 +40,14 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
           className="text-blue-500 cursor-pointer"
           size={25}
         />
-        <FiTrash className="text-red-500 cursor-pointer" size={25} />
+        <FiTrash
+          className="text-red-500 cursor-pointer"
+          size={25}
+          onClick={() => {
+            deletetabledata(task.id);
+            router.refresh();
+          }}
+        />
       </td>
       <td>
         <Modaledit
@@ -48,6 +55,7 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
         >
+          <h3 className="font-bold text-lg items-start">Edit Task</h3>
           <form
             onSubmit={handleUpdateTodo}
             className="flex flex-col mt-5 items-center"

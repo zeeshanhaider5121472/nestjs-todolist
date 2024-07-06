@@ -34,3 +34,12 @@ export const patchtabledata = async (todo: TableTasks): Promise<TableTasks> => {
   const updatedTodo = await res.json();
   return updatedTodo;
 };
+
+//Delete API
+export const deletetabledata = async (id: string): Promise<void> => {
+  const res = await fetch(`${baseurl}/tasks/${id}`, {
+    method: "DELETE",
+  });
+  const updatedTodo = await res.json();
+  return updatedTodo;
+};
