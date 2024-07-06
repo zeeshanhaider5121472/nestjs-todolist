@@ -43,11 +43,26 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
         <FiTrash
           className="text-red-500 cursor-pointer"
           size={25}
+          onClick={async () => {
+            try {
+              await deletetabledata(task.id);
+              // Update your local state with updatedTasks
+              // setTask1(updatedTasks); // Assuming you have a setTasks function from useState
+              router.refresh();
+            } catch (error) {
+              console.error("Failed to delete task:", error);
+              // Show an error message to the user
+            }
+          }}
+        />
+        {/* <FiTrash
+          className="text-red-500 cursor-pointer"
+          size={25}
           onClick={() => {
             deletetabledata(task.id);
             router.refresh();
           }}
-        />
+        /> */}
       </td>
       <td>
         <Modaledit

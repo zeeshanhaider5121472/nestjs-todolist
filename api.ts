@@ -50,27 +50,60 @@ export const patchtabledata = async (todo: TableTasks): Promise<TableTasks> => {
 };
 
 //Delete API and update tasknumbers
-export const deletetabledata = async (id: string): Promise<void> => {
-  await fetch(`${baseurl}/tasks/${id}`, {
-    method: "DELETE",
-  });
 
-  const res = await fetch(`${baseurl}/tasks`, { cache: "no-store" });
-  let remainingTasks: TableTasks[] = await res.json();
+export const deletetabledata = async (id: string): Promise<TableTasks[]> => {
+  try {
+    // Delete the task
+    const deleteRes = await fetch(`${baseurl}/tasks/${id}`, {
+      method: "DELETE",
+    });
+    if (!deleteRes.ok) throw new Error(`Failed to delete task: ${deleteRes.statusText}`);
 
-  remainingTasks = remainingTasks
-    // .sort((a, b) => a.taskNumber - b.taskNumber)
-    .map((task, index) => ({
-      ...task,
-      taskNumber: index + 1,
-    }));
+    // Fetch remaining tasks
+    const fetchRes = await fetch(`${baseurl}/tasks`, { cache: "no-store" });
+    if (!fetchRes.ok) throw new Error(`Failed to fetch tasks: ${fetchRes.statusText}`);
 
-  remainingTasks.map((task) => {
-    console.log(task);
-    patchtabledata(task);
-  });
-  // patchtabledata(remainingTasks);
+    let remainingTasks: TableTasks[] = await fetchRes.json();
 
-  // const updatedTodo = await res.json();
-  // return updatedTodo;
+    // Update task numbers
+    remainingTasks = remainingTasks
+      .sort((a, b) => a.taskNumber - b.taskNumber)
+      .map((task, index) => ({
+        ...task,
+        taskNumber: index + 1,
+      }));
+
+    // Update all tasks concurrently
+    await Promise.all(remainingTasks.map(task => patchtabledata(task)));
+
+    return remainingTasks;
+  } catch (error) {
+    console.error("Error in deletetabledata:", error);
+    throw error;
+  }
 };
+
+// export const deletetabledata = async (id: string): Promise<void> => {
+//   await fetch(`${baseurl}/tasks/${id}`, {
+//     method: "DELETE",
+//   });
+
+//   const res = await fetch(`${baseurl}/tasks`, { cache: "no-store" });
+//   let remainingTasks: TableTasks[] = await res.json();
+
+//   remainingTasks = remainingTasks
+//     // .sort((a, b) => a.taskNumber - b.taskNumber)
+//     .map((task, index) => ({
+//       ...task,
+//       taskNumber: index + 1,
+//     }));
+
+//   remainingTasks.map((task) => {
+//     console.log(task);
+//     patchtabledata(task);
+//   });
+//   // patchtabledata(remainingTasks);
+
+//   // const updatedTodo = await res.json();
+//   // return updatedTodo;
+// };
