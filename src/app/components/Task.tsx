@@ -1,7 +1,8 @@
 "use client";
-
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { FormEventHandler, useState } from "react";
 import { FiEdit, FiTrash } from "react-icons/fi";
+import { patchtabledata } from "../../../api";
 import { TableTasks } from "../../../types/tabledata";
 import Modaledit from "./Modaledit";
 
@@ -11,6 +12,23 @@ interface TaskProps {
 
 export const Task: React.FC<TaskProps> = ({ task }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [updatedTaskValue, setUpdatedTaskValue] = useState<string>(
+    task.Description
+  );
+  const router = useRouter();
+
+  const handleUpdateTodo: FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    await patchtabledata({
+      id: task.id,
+      taskNumber: task.taskNumber,
+      Description: updatedTaskValue,
+    });
+    console.log(updatedTaskValue);
+    // setUpdatedTaskValue("");
+    setModalOpen(false);
+    router.refresh();
+  };
 
   return (
     <tr key={task.id}>
@@ -26,10 +44,29 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
       </td>
       <td>
         <Modaledit
-          task={task}
+          // task={task}
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
-        />
+        >
+          <form
+            onSubmit={handleUpdateTodo}
+            className="flex flex-col mt-5 items-center"
+          >
+            <input
+              value={updatedTaskValue}
+              onChange={(e) => setUpdatedTaskValue(e.target.value)}
+              className="input w-full"
+              type="text"
+              placeholder="Edit your task"
+            />
+            <button
+              className="bg-blue-500 text-white btn w-full "
+              type="submit"
+            >
+              Update Task
+            </button>
+          </form>
+        </Modaledit>
       </td>
     </tr>
   );
