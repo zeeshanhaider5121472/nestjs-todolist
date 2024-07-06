@@ -4,7 +4,20 @@ const baseurl = "http://localhost:3001";
 
 // Fetch data from API
 export const gettabledata = async (): Promise<TableTasks[]> => {
-  const res = await fetch(`${baseurl}/tasks`);
+  const res = await fetch(`${baseurl}/tasks`, { cache: "no-store" });
   const data = res.json();
   return data;
+};
+
+//Post API
+export const posttabledata = async (todo: TableTasks): Promise<TableTasks> => {
+  const res = await fetch(`${baseurl}/tasks`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(todo),
+  });
+  const newTodo = await res.json();
+  return newTodo;
 };

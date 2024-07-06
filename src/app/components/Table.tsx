@@ -1,3 +1,4 @@
+
 import { TableTasks } from "../../../types/tabledata";
 import { Task } from "./Task";
 
@@ -11,8 +12,9 @@ const Table: React.FC<TodoList> = ({ tasks }) => {
       <table className="table">
         <thead>
           <tr>
-            <th>Name</th>
+            <th>TaskNo.</th>
             <th>Description</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>

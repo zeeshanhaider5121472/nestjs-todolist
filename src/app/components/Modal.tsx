@@ -1,9 +1,14 @@
 interface ModalProps {
   modalOpen: boolean;
   setModalOpen: (value: boolean) => void;
+  children: React.ReactNode;
 }
 
-export const Modal: React.FC<ModalProps> = ({ modalOpen, setModalOpen }) => {
+export const Modal: React.FC<ModalProps> = ({
+  modalOpen,
+  setModalOpen,
+  children,
+}) => {
   return (
     <div id="my_modal_3" className={`modal ${modalOpen ? "modal-open" : ""}`}>
       <div className="modal-box">
@@ -16,8 +21,7 @@ export const Modal: React.FC<ModalProps> = ({ modalOpen, setModalOpen }) => {
             ✕
           </button>
         </form>
-        <h3 className="font-bold text-lg">Hello!</h3>
-        <p className="py-4">Press ESC key or click on ✕ button to close</p>
+        {children}
       </div>
     </div>
   );

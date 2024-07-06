@@ -1,7 +1,7 @@
 import { gettabledata } from "../../api";
 import { AddTask } from "./components/AddTask";
 import Table from "./components/Table";
-export const revalidate = 0;
+// export const revalidate = 0;
 export default async function Home() {
   const data = await gettabledata();
   console.log(data);
@@ -10,7 +10,7 @@ export default async function Home() {
       <div className=" font-bold items-center align-middle justify-center mt-3 h-20 flex">
         TodolistApp
       </div>
-      <AddTask />
+      <AddTask olddata={data} />
       <Table tasks={data} />
     </main>
   );
