@@ -29,7 +29,7 @@ export const AddTask: React.FC<TaskProps> = ({ olddata }) => {
       toast.success("Task added successfully!");
       // console.log(newTaskValue);
       setNewTaskValue("");
-      setModalOpen(false);
+
       router.refresh();
     } catch (error) {
       if (error instanceof Error) {
@@ -37,6 +37,8 @@ export const AddTask: React.FC<TaskProps> = ({ olddata }) => {
       } else {
         toast.error("An unknown error occurred");
       }
+    } finally {
+      setModalOpen(false);
     }
   };
   return (
@@ -56,7 +58,7 @@ export const AddTask: React.FC<TaskProps> = ({ olddata }) => {
           <input
             value={newTaskValue}
             onChange={(e) => setNewTaskValue(e.target.value)}
-            className="input w-full"
+            className="input w-full input-bordered mb-5"
             type="text"
             placeholder="Enter your task"
           />
