@@ -1,11 +1,9 @@
 import { Toaster } from "react-hot-toast";
-import { gettabledata } from "../../api";
-import { AddTask } from "./components/AddTask";
-import Table from "./components/Table";
+// import { gettabledata } from "../../api";
 // export const revalidate = 0;
 export default async function Home() {
-  const data = await gettabledata();
-  console.log(data);
+  // const data = await gettabledata();
+  // console.log(data);
   return (
     <main className="bg-white">
       <Toaster position="top-center" />
@@ -14,8 +12,8 @@ export default async function Home() {
         <div className=" font-bold items-center align-middle justify-center mt-3 h-20 flex">
           TodolistApp
         </div>
-        <AddTask olddata={data} />
-        <Table tasks={data} />
+        {/* <AddTask olddata={data} />
+        <Table tasks={data} /> */}
       </div>
     </main>
   );
