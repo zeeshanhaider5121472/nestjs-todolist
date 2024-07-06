@@ -1,6 +1,11 @@
 import { TableTasks } from "./types/tabledata";
 
-const baseurl = "http://localhost:3001";
+// const baseurl = "http://localhost:3001";
+// const baseurl = "https://lumbar-gleaming-sort.glitch.me";
+const baseurl =
+  process.env.NODE_ENV === "production"
+    ? "https://lumbar-gleaming-sort.glitch.me" // This will call your Vercel serverless functions
+    : "http://localhost:3001";
 
 // Fetch data from API
 export const gettabledata = async (): Promise<TableTasks[]> => {
