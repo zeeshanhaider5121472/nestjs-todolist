@@ -1,11 +1,9 @@
 import { TableTasks } from "../../../types/tabledata";
-import { Task } from "./Task";
 
 interface TodoList {
   tasks: TableTasks[];
 }
 
-// const Table: React.FC<TodoList> = () => {
 const Table: React.FC<TodoList> = ({ tasks }) => {
   return (
     <div className="overflow-x-auto">
@@ -18,9 +16,9 @@ const Table: React.FC<TodoList> = ({ tasks }) => {
           </tr>
         </thead>
         <tbody>
-          {tasks.map((task) => (
+          {/* {tasks.map((task) => (
             <Task key={task.id} task={task} />
-          ))}
+          ))} */}
         </tbody>
       </table>
     </div>
