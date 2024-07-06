@@ -1,5 +1,5 @@
-// export interface TableTasks {
-//   id: string;
-//   Description: string;
-//   taskNumber: number;
-// }
+export interface TableTasks {
+  id: string;
+  Description: string;
+  taskNumber: number;
+}
