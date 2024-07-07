@@ -35,7 +35,7 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
     <tr key={task.id}>
       <td className="w-fit">{task.taskNumber}</td>
       <td className="w-full">{task.Description}</td>
-      <td className="flex flex-row gap-5">
+      <td className="flex flex-row gap-5 w-fit justify-evenly">
         <FiEdit
           onClick={() => setModalOpen(true)}
           className="text-blue-500 cursor-pointer"
@@ -68,7 +68,7 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
           }}
         /> */}
       </td>
-      <td>
+      <td className={`${deleteLoader ? "" : "hidden"}`}>
         {deleteLoader ? (
           <span className="loading loading-ball loading-lg" />
         ) : (
