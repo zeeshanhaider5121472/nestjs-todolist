@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { FiEdit, FiTrash } from "react-icons/fi";
+import { MdDragIndicator } from "react-icons/md";
 import { deletetabledata, patchtabledata } from "../../../api";
 import { TableTasks } from "../../../types/tabledata";
 import Modaledit from "./Modaledit";
@@ -45,9 +46,19 @@ export const Task: React.FC<TaskProps> = ({ task, index }) => {
             backgroundColor: snapshot.isDragging ? "lightblue" : "white",
           }}
         >
-          <td className="w-fit" {...provided.dragHandleProps}>
-            {task.taskNumber}
+          <td
+            className="w-fit p-0"
+            {...provided.dragHandleProps}
+            // style={{ width: "18px", height: "18px" }}
+          >
+            <div className="flex items-center justify-center w-full h-full">
+              <MdDragIndicator
+                className="text-blue-500 cursor-pointer bg-slate-400"
+                size={18}
+              />
+            </div>
           </td>
+          <td className="w-fit">{task.taskNumber}</td>
           <td className="w-full">{task.Description}</td>
           <td className="flex flex-row gap-5 w-fit justify-evenly">
             <FiEdit

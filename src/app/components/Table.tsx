@@ -76,6 +76,7 @@ const Table: React.FC<TodoList> = ({ tasks }) => {
         <table className="table">
           <thead>
             <tr>
+              <th></th>
               <th>TaskNo.</th>
               <th>Description</th>
               <th>Actions</th>
