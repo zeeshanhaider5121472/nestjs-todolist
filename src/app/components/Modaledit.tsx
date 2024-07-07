@@ -16,7 +16,7 @@ const Modaledit: React.FC<TaskProps> = ({
         <form method="dialog">
           <button
             onClick={() => setModalOpen(false)}
-            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 mt-4 bg-slate-800 text-white"
           >
             ✕
           </button>

@@ -79,7 +79,7 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
         >
-          <h3 className="font-bold text-lg items-start">Edit Task</h3>
+          <h3 className="font-bold text-lg ">Edit Task</h3>
           <form
             onSubmit={handleUpdateTodo}
             className="flex flex-col mt-5 items-center"
@@ -87,7 +87,7 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
             <input
               value={updatedTaskValue}
               onChange={(e) => setUpdatedTaskValue(e.target.value)}
-              className="input w-full"
+              className="input w-full input-bordered mb-5"
               type="text"
               placeholder="Edit your task"
             />
