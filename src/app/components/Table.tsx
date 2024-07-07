@@ -88,7 +88,7 @@ const Table: React.FC<TodoList> = ({ tasks }) => {
               {(provided) => (
                 <tbody ref={provided.innerRef} {...provided.droppableProps}>
                   {tasks.map((task, index) => (
-                    <Task key={task.id} task={task} index={index} />
+                    <Task key={task.id} task={task} index={index} setIsLoading={setIsLoading}/>
                   ))}
                   {provided.placeholder}
                 </tbody>

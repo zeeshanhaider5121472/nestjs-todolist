@@ -45,7 +45,7 @@ export const AddTask: React.FC<TaskProps> = ({ olddata }) => {
     <div>
       <button
         onClick={() => setModalOpen(true)}
-        className="btn btn-neutral w-full"
+        className="btn btn-neutral w-full text-white"
       >
         Add New Todo +
       </button>

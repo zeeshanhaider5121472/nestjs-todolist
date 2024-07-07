@@ -11,9 +11,10 @@ import Modaledit from "./Modaledit";
 interface TaskProps {
   task: TableTasks;
   index: number;
+  setIsLoading: (isLoading: boolean) => void;
 }
 
-export const Task: React.FC<TaskProps> = ({ task, index }) => {
+export const Task: React.FC<TaskProps> = ({ task, index, setIsLoading }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [deleteLoader, setDeleteLoader] = useState<boolean>(false);
   const [updatedTaskValue, setUpdatedTaskValue] = useState<string>(
@@ -52,10 +53,7 @@ export const Task: React.FC<TaskProps> = ({ task, index }) => {
             // style={{ width: "18px", height: "18px" }}
           >
             <div className="flex items-center justify-center w-full h-full">
-              <MdDragIndicator
-                className="text-blue-500 cursor-pointer bg-slate-400"
-                size={18}
-              />
+              <MdDragIndicator className="text-black" size={18} />
             </div>
           </td>
           <td className="w-fit">{task.taskNumber}</td>
@@ -70,7 +68,9 @@ export const Task: React.FC<TaskProps> = ({ task, index }) => {
               className="text-red-500 cursor-pointer"
               size={25}
               onClick={async () => {
+                setIsLoading(true);
                 setDeleteLoader(true);
+
                 try {
                   await deletetabledata(task.id);
                   // Update your local state with updatedTasks
@@ -81,6 +81,7 @@ export const Task: React.FC<TaskProps> = ({ task, index }) => {
                   // Show an error message to the user
                 } finally {
                   setDeleteLoader(false);
+                  setIsLoading(false);
                 }
               }}
             />
