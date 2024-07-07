@@ -12,6 +12,7 @@ interface TaskProps {
 
 export const Task: React.FC<TaskProps> = ({ task }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [deleteLoader, setDeleteLoader] = useState<boolean>(false);
   const [updatedTaskValue, setUpdatedTaskValue] = useState<string>(
     task.Description
   );
@@ -44,6 +45,7 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
           className="text-red-500 cursor-pointer"
           size={25}
           onClick={async () => {
+            setDeleteLoader(true);
             try {
               await deletetabledata(task.id);
               // Update your local state with updatedTasks
@@ -52,6 +54,8 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
             } catch (error) {
               console.error("Failed to delete task:", error);
               // Show an error message to the user
+            } finally {
+              setDeleteLoader(false);
             }
           }}
         />
@@ -65,6 +69,11 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
         /> */}
       </td>
       <td>
+        {deleteLoader ? (
+          <span className="loading loading-ball loading-lg" />
+        ) : (
+          <></>
+        )}
         <Modaledit
           // task={task}
           modalOpen={modalOpen}
