@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";
+import { Draggable } from "react-beautiful-dnd";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import { deletetabledata, patchtabledata } from "../../../api";
 import { TableTasks } from "../../../types/tabledata";
@@ -8,9 +9,10 @@ import Modaledit from "./Modaledit";
 
 interface TaskProps {
   task: TableTasks;
+  index: number;
 }
 
-export const Task: React.FC<TaskProps> = ({ task }) => {
+export const Task: React.FC<TaskProps> = ({ task, index }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [deleteLoader, setDeleteLoader] = useState<boolean>(false);
   const [updatedTaskValue, setUpdatedTaskValue] = useState<string>(
@@ -32,74 +34,88 @@ export const Task: React.FC<TaskProps> = ({ task }) => {
   };
 
   return (
-    <tr key={task.id}>
-      <td className="w-fit">{task.taskNumber}</td>
-      <td className="w-full">{task.Description}</td>
-      <td className="flex flex-row gap-5 w-fit justify-evenly">
-        <FiEdit
-          onClick={() => setModalOpen(true)}
-          className="text-blue-500 cursor-pointer"
-          size={25}
-        />
-        <FiTrash
-          className="text-red-500 cursor-pointer"
-          size={25}
-          onClick={async () => {
-            setDeleteLoader(true);
-            try {
-              await deletetabledata(task.id);
-              // Update your local state with updatedTasks
-              // setTask1(updatedTasks); // Assuming you have a setTasks function from useState
-              router.refresh();
-            } catch (error) {
-              console.error("Failed to delete task:", error);
-              // Show an error message to the user
-            } finally {
-              setDeleteLoader(false);
-            }
+    <Draggable draggableId={task.id.toString()} index={index}>
+      {(provided, snapshot) => (
+        <tr
+          key={task.id}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          style={{
+            ...provided.draggableProps.style,
+            backgroundColor: snapshot.isDragging ? "lightblue" : "white",
           }}
-        />
-        {/* <FiTrash
-          className="text-red-500 cursor-pointer"
-          size={25}
-          onClick={() => {
-            deletetabledata(task.id);
-            router.refresh();
-          }}
-        /> */}
-      </td>
-      <td className={`${deleteLoader ? "" : "hidden"}`}>
-        {deleteLoader ? (
-          <span className="loading loading-ball loading-lg" />
-        ) : (
-          <></>
-        )}
-        <Modaledit
-          // task={task}
-          modalOpen={modalOpen}
-          setModalOpen={setModalOpen}
         >
-          <h3 className="font-bold text-lg ">Edit Task</h3>
-          <form
-            onSubmit={handleUpdateTodo}
-            className="flex flex-col mt-5 items-center"
-          >
-            <input
-              value={updatedTaskValue}
-              onChange={(e) => setUpdatedTaskValue(e.target.value)}
-              className="input w-full input-bordered mb-5"
-              type="text"
-              placeholder="Edit your task"
+          <td className="w-fit" {...provided.dragHandleProps}>
+            {task.taskNumber}
+          </td>
+          <td className="w-full">{task.Description}</td>
+          <td className="flex flex-row gap-5 w-fit justify-evenly">
+            <FiEdit
+              onClick={() => setModalOpen(true)}
+              className="text-blue-500 cursor-pointer"
+              size={25}
             />
-            <button
-              className="bg-blue-500 text-white btn w-full "
-              type="submit"
+            <FiTrash
+              className="text-red-500 cursor-pointer"
+              size={25}
+              onClick={async () => {
+                setDeleteLoader(true);
+                try {
+                  await deletetabledata(task.id);
+                  // Update your local state with updatedTasks
+                  // setTask1(updatedTasks); // Assuming you have a setTasks function from useState
+                  router.refresh();
+                } catch (error) {
+                  console.error("Failed to delete task:", error);
+                  // Show an error message to the user
+                } finally {
+                  setDeleteLoader(false);
+                }
+              }}
+            />
+            <Modaledit
+              // task={task}
+              modalOpen={modalOpen}
+              setModalOpen={setModalOpen}
             >
-              Update Task
-            </button>
-          </form>
-        </Modaledit>
-      </td>
-    </tr>
+              <h3 className="font-bold text-lg ">Edit Task</h3>
+              <form
+                onSubmit={handleUpdateTodo}
+                className="flex flex-col mt-5 items-center"
+              >
+                <input
+                  value={updatedTaskValue}
+                  onChange={(e) => setUpdatedTaskValue(e.target.value)}
+                  className="input w-full input-bordered mb-5"
+                  type="text"
+                  placeholder="Edit your task"
+                />
+                <button
+                  className="bg-blue-500 text-white btn w-full "
+                  type="submit"
+                >
+                  Update Task
+                </button>
+              </form>
+            </Modaledit>
+            {/* <FiTrash
+            className="text-red-500 cursor-pointer"
+            size={25}
+            onClick={() => {
+              deletetabledata(task.id);
+              router.refresh();
+            }}
+          /> */}
+          </td>
+          <td className={`${deleteLoader ? "" : "hidden"}`}>
+            {deleteLoader ? (
+              <span className="loading loading-ball loading-lg" />
+            ) : (
+              <></>
+            )}
+          </td>
+        </tr>
+      )}
+    </Draggable>
   );
 };
