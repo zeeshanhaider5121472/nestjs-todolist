@@ -5,7 +5,7 @@ import Table from "./components/Table";
 // export const revalidate = 0;
 export default async function Home() {
   const data = await gettabledata();
-  console.log(data);
+  // console.log(data);
   return (
     <main className="bg-white">
       <Toaster position="top-center" />

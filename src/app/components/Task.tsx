@@ -27,7 +27,7 @@ export const Task: React.FC<TaskProps> = ({ task, index }) => {
       taskNumber: task.taskNumber,
       Description: updatedTaskValue,
     });
-    console.log(updatedTaskValue);
+    // console.log(updatedTaskValue);
     // setUpdatedTaskValue("");
     setModalOpen(false);
     router.refresh();
