@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { patchtabledata } from "../../../api";
 import { TableTasks } from "../../../types/tabledata";
+import LoaderModal from "./LoaderModal";
 import { Task } from "./Task";
 
 interface TodoList {
@@ -12,6 +13,7 @@ interface TodoList {
 
 const Table: React.FC<TodoList> = ({ tasks }) => {
   const [isBrowser, setIsBrowser] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   tasks.sort((a, b) => a.taskNumber - b.taskNumber);
 
@@ -23,6 +25,7 @@ const Table: React.FC<TodoList> = ({ tasks }) => {
   }, []);
 
   const onDragEnd = async (result: DropResult) => {
+    setIsLoading(true);
     if (!result.destination) return;
 
     const items = Array.from(tasks);
@@ -50,6 +53,7 @@ const Table: React.FC<TodoList> = ({ tasks }) => {
 
     // Optionally, refresh the page or refetch data
     router.refresh();
+    setIsLoading(false);
   };
   // const onDragEnd = (result: DropResult) => {
   //   // Handle the end of drag operation here
@@ -67,6 +71,7 @@ const Table: React.FC<TodoList> = ({ tasks }) => {
 
   return (
     <div className="overflow-x-auto">
+      {isLoading && <LoaderModal />}
       <DragDropContext onDragEnd={onDragEnd}>
         <table className="table">
           <thead>

@@ -2,17 +2,17 @@
   "tasks": [
     {
       "id": "3b9d102d-8144-4974-8831-09e8ee7a89b3",
-      "taskNumber": 2,
+      "taskNumber": 1,
       "Description": "Drink Water"
     },
     {
       "id": "ba376523-f807-4b89-9a94-9acab1c40638",
-      "taskNumber": 3,
+      "taskNumber": 2,
       "Description": "Eat food"
     },
     {
       "id": "552e39f0-fad3-4d3f-bd1f-e7f5a9cdc16c",
-      "taskNumber": 1,
+      "taskNumber": 3,
       "Description": "sleeps"
     },
     {
