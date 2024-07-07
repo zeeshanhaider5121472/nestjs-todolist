@@ -9,11 +9,12 @@ import { Task } from "./Task";
 
 interface TodoList {
   tasks: TableTasks[];
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
 }
 
-const Table: React.FC<TodoList> = ({ tasks }) => {
+const Table: React.FC<TodoList> = ({ tasks, isLoading, setIsLoading }) => {
   const [isBrowser, setIsBrowser] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   tasks.sort((a, b) => a.taskNumber - b.taskNumber);
 
@@ -88,7 +89,12 @@ const Table: React.FC<TodoList> = ({ tasks }) => {
               {(provided) => (
                 <tbody ref={provided.innerRef} {...provided.droppableProps}>
                   {tasks.map((task, index) => (
-                    <Task key={task.id} task={task} index={index} setIsLoading={setIsLoading}/>
+                    <Task
+                      key={task.id}
+                      task={task}
+                      index={index}
+                      setIsLoading={setIsLoading}
+                    />
                   ))}
                   {provided.placeholder}
                 </tbody>

@@ -10,13 +10,15 @@ import { Modal } from "./Modal";
 
 interface TaskProps {
   olddata: TableTasks[];
+  setIsLoading: (value: boolean) => void;
 }
-export const AddTask: React.FC<TaskProps> = ({ olddata }) => {
+export const AddTask: React.FC<TaskProps> = ({ olddata, setIsLoading }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [newTaskValue, setNewTaskValue] = useState<string>("");
   const router = useRouter();
 
   const handleSubmitTodo: FormEventHandler<HTMLFormElement> = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
     try {
@@ -39,6 +41,7 @@ export const AddTask: React.FC<TaskProps> = ({ olddata }) => {
       }
     } finally {
       setModalOpen(false);
+      setIsLoading(false);
     }
   };
   return (

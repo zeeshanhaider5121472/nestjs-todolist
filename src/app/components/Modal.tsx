@@ -10,7 +10,10 @@ export const Modal: React.FC<ModalProps> = ({
   children,
 }) => {
   return (
-    <div id="my_modal_3" className={`modal ${modalOpen ? "modal-open" : ""}`}>
+    <div
+      id="my_modal_3"
+      className={`modal z-10 ${modalOpen ? "modal-open" : ""}`}
+    >
       <div className="modal-box">
         <form method="dialog">
           {/* if there is a button in form, it will close the modal */}
