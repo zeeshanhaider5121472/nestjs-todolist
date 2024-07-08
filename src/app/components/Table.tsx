@@ -26,8 +26,8 @@ const Table: React.FC<TodoList> = ({ tasks, isLoading, setIsLoading }) => {
   }, []);
 
   const onDragEnd = async (result: DropResult) => {
-    setIsLoading(true);
     if (!result.destination) return;
+    setIsLoading(true);
 
     const items = Array.from(tasks);
     const [reorderedItem] = items.splice(result.source.index, 1);

@@ -12,7 +12,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data }) => {
   const [isLoading, setIsLoading] = useState(false);
   return (
     <div>
-      {/* <LoaderModal /> */}
       <AddTask olddata={data} setIsLoading={setIsLoading} />
       <Table tasks={data} setIsLoading={setIsLoading} isLoading={isLoading} />
     </div>
