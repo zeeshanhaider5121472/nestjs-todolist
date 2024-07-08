@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useEffect, useRef, useState } from "react";
+
 import { Draggable } from "react-beautiful-dnd";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import { MdDragIndicator } from "react-icons/md";
@@ -21,6 +22,13 @@ export const Task: React.FC<TaskProps> = ({ task, index, setIsLoading }) => {
     task.Description
   );
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (modalOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [modalOpen]);
 
   const handleUpdateTodo: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -96,9 +104,10 @@ export const Task: React.FC<TaskProps> = ({ task, index, setIsLoading }) => {
                 className="flex flex-col mt-5 items-center"
               >
                 <input
+                  ref={inputRef}
                   value={updatedTaskValue}
                   onChange={(e) => setUpdatedTaskValue(e.target.value)}
-                  className="input w-full input-bordered mb-5"
+                  className="input w-full input-bordered mb-5 focus:outline-none focus:drop-shadow-md "
                   type="text"
                   placeholder="Edit your task"
                 />
