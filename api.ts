@@ -4,7 +4,7 @@ import { TableTasks } from "./types/tabledata";
 // const baseurl = "https://lumbar-gleaming-sort.glitch.me";
 const baseurl =
   process.env.NODE_ENV === "production"
-    ? "https://lumbar-gleaming-sort.glitch.me" // This will call your Vercel serverless functions
+    ? "https://json-db-api-production.up.railway.app" // This will call your Vercel serverless functions
     : "http://localhost:3001";
 
 // Fetch data from API
